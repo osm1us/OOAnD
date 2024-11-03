@@ -1,7 +1,7 @@
 ﻿
 public class Vector
 {
-    private readonly List<int> coordinates;
+    private List<int> coordinates;
 
     public Vector(List<int> coordinates)
     {
@@ -10,6 +10,7 @@ public class Vector
 
     public static Vector operator +(Vector vector1, Vector vector2)
     {
+        if(!vector1.EqualsDimension(vector2)) throw new ArgumentException("Размерности векторов не совпадают.");
         var resultCoordinates = new Vector(new List<int>());
         for (var i = 0; i < vector1.Dimension; i++)
         {
@@ -20,7 +21,7 @@ public class Vector
     }
     public int Dimension => coordinates.Count;
 
-    public static bool IsNull(Vector vector) => (vector == null) || (vector.Dimension == 0);
+    public static bool IsNull(Vector? vector) => (vector == null) || (vector.Dimension == 0);
 
     public static bool IsVector(object vector) => vector is Vector;
 
