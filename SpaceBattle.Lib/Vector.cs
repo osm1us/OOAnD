@@ -1,9 +1,9 @@
 ﻿
 public class Vector
 {
-    private List<int> coordinates { get; set; }
+    private int[] coordinates { get; set; }
 
-    public Vector(List<int> coordinates)
+    public Vector(params int[] coordinates)
     {
         this.coordinates = coordinates;
     }
@@ -15,21 +15,21 @@ public class Vector
             throw new ArgumentException("Размерности векторов не совпадают.");
         }
 
-        var resultCoordinates = new Vector(new List<int>());
+        var resultCoordinates = new Vector(new int[vector1.Dimension]);
         for (var i = 0; i < vector1.Dimension; i++)
         {
-            resultCoordinates.coordinates.Add(vector1.coordinates[i] + vector2.coordinates[i]);
+            resultCoordinates.coordinates[i] = vector1.coordinates[i] + vector2.coordinates[i];
         }
 
         return resultCoordinates;
     }
-    public int Dimension => coordinates.Count;
+    public int Dimension => coordinates.Length;
 
     public static bool IsNull(Vector? vector) => (vector == null) || (vector.Dimension == 0);
 
     public static bool IsVector(object vector) => vector is Vector;
 
-    public bool EqualsDimension(Vector vector) => coordinates.Count == vector.Dimension;
+    public bool EqualsDimension(Vector vector) => coordinates.Length == vector.Dimension;
 
     public bool EqualsCoordinates(Vector vector) => coordinates.SequenceEqual(vector.coordinates);
 }
