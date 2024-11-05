@@ -1,5 +1,4 @@
-﻿
-public class Vector
+﻿public class Vector
 {
     private int[] coordinates { get; set; }
 
@@ -25,7 +24,7 @@ public class Vector
     }
     public int Dimension => coordinates.Length;
 
-    public static bool IsNull(Vector? vector) => (vector == null) || (vector.Dimension == 0);
+    public static bool IsNull(Vector? vector) => vector == null;
 
     public static bool IsVector(object vector) => vector is Vector;
 
