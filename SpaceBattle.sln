@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpaceBattle.Lib", "SpaceBattle.Lib\SpaceBattle.Lib.csproj", "{27957766-6BDF-4A96-8835-53852026E6CF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpaceBattle.Tests", "SpaceBattle.Tests\SpaceBattle.Tests.csproj", "{3313FBA6-2C3A-49AF-A1BF-D80460A7407D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{27957766-6BDF-4A96-8835-53852026E6CF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{27957766-6BDF-4A96-8835-53852026E6CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{27957766-6BDF-4A96-8835-53852026E6CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{27957766-6BDF-4A96-8835-53852026E6CF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3313FBA6-2C3A-49AF-A1BF-D80460A7407D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3313FBA6-2C3A-49AF-A1BF-D80460A7407D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3313FBA6-2C3A-49AF-A1BF-D80460A7407D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3313FBA6-2C3A-49AF-A1BF-D80460A7407D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
