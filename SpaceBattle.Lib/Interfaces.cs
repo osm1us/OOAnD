@@ -1,12 +1,10 @@
-﻿public interface ICommand
+﻿namespace SpaceBattle.Lib;
+
+public interface ICommand
 {
     public void Execute();
 }
-public interface ISender
+public interface Injectable
 {
-    void Add(ICommand cmd);
-}
-public interface IReceiver
-{
-    ICommand Take();
+    void Inject(ICommand cmd);
 }
