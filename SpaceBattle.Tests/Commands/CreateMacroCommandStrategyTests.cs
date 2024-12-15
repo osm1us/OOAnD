@@ -1,5 +1,4 @@
-using Hwdtech;
-using Hwdtech.Ioc;
+﻿using Hwdtech.Ioc;
 using Moq;
 using SpaceBattle.Lib;
 
@@ -14,35 +13,64 @@ namespace SpaceBattle.Tests
         }
 
         [Fact]
-        public void SuccessfulMacroCommandCreation()
+        public void Resolve_Should_Create_MacroCommand_When_Dependency_Exists()
         {
-            var cmd1 = new Mock<ICommand>();
-            var cmd2 = new Mock<ICommand>();
-            cmd1.Setup(c => c.Execute());
-            cmd2.Setup(c => c.Execute());
+            var mockCommand1 = new Mock<ICommand>();
+            var mockCommand2 = new Mock<ICommand>();
 
-            var command = new RegisterIoCDependencyMacroCommand();
-            command.Execute();
+            var scope = IoC.Resolve<object>("Scopes.New", IoC.Resolve<object>("Scopes.Root"));
+            IoC.Resolve<ICommand>("Scopes.Current.Set", scope).Execute();
 
-            var macroCommand = IoC.Resolve<ICommand>("Commands.Macro", new ICommand[] { cmd1.Object, cmd2.Object });
+            IoC.Resolve<ICommand>("IoC.Register", "Specs.Test", (Func<object[], object>)(_ =>
+                new string[] { "Command1", "Command2" })).Execute();
+
+            IoC.Resolve<ICommand>("IoC.Register", "Command1", (Func<object[], object>)(_ =>
+                mockCommand1.Object)).Execute();
+
+            IoC.Resolve<ICommand>("IoC.Register", "Command2", (Func<object[], object>)(_ =>
+                mockCommand2.Object)).Execute();
+
+            var registerMacroCommand = new RegisterIoCDependencyMacroCommand();
+            registerMacroCommand.Execute();
+
+            var strategy = new CreateMacroCommandStrategy("Test");
+            var args = new object[] { };
+
+            var macroCommand = strategy.Resolve(args);
             macroCommand.Execute();
 
-            cmd1.Verify(c => c.Execute(), Times.Once());
-            cmd2.Verify(c => c.Execute(), Times.Once());
+            mockCommand1.Verify(m => m.Execute(), Times.Once());
+            mockCommand2.Verify(m => m.Execute(), Times.Once());
         }
 
         [Fact]
-        public void MacroCommandCreationFailsWhenCommandExecutionFails()
+        public void Resolve_Should_Throw_When_Specs_Dependency_Not_Exists()
         {
-            var cmd1 = new Mock<ICommand>();
-            var cmd2 = new Mock<ICommand>();
-            cmd2.Setup(c => c.Execute()).Throws<Exception>();
+            var scope = IoC.Resolve<object>("Scopes.New", IoC.Resolve<object>("Scopes.Root"));
+            IoC.Resolve<ICommand>("Scopes.Current.Set", scope).Execute();
 
-            var command = new RegisterIoCDependencyMacroCommand();
-            command.Execute();
+            var strategy = new CreateMacroCommandStrategy("NonExistentSpec");
+            var args = new object[] { };
 
-            var macroCommand = IoC.Resolve<ICommand>("Commands.Macro", new ICommand[] { cmd1.Object, cmd2.Object });
-            Assert.Throws<Exception>(() => macroCommand.Execute());
+            Assert.Throws<ArgumentException>(() => strategy.Resolve(args));
+        }
+
+        [Fact]
+        public void Resolve_Should_Throw_When_Command_Dependency_Not_Exists()
+        {
+            var scope = IoC.Resolve<object>("Scopes.New", IoC.Resolve<object>("Scopes.Root"));
+            IoC.Resolve<ICommand>("Scopes.Current.Set", scope).Execute();
+
+            IoC.Resolve<ICommand>("IoC.Register", "Specs.Test", (Func<object[], object>)(_ =>
+                new string[] { "NonExistentCommand" })).Execute();
+
+            var registerMacroCommand = new RegisterIoCDependencyMacroCommand();
+            registerMacroCommand.Execute();
+
+            var strategy = new CreateMacroCommandStrategy("Test");
+            var args = new object[] { };
+
+            Assert.Throws<ArgumentException>(() => strategy.Resolve(args));
         }
     }
 }
