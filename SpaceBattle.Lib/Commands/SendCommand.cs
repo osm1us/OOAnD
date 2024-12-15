@@ -1,9 +1,4 @@
-using SpaceBattle.Lib;
-
-public interface ICommandReceiver
-{
-    void Receive(ICommand command);
-}
+namespace SpaceBattle.Lib;
 
 public class SendCommand(ICommand cmd, ICommandReceiver receiver) : ICommand
 {

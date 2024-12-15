@@ -11,7 +11,6 @@ namespace SpaceBattle.Tests
         public RegisterIoCDependencySendCommandTests()
         {
             new InitScopeBasedIoCImplementationCommand().Execute();
-            IoC.Resolve<ICommand>("Scopes.Current.Set", IoC.Resolve<object>("Scopes.New", null)).Execute();
         }
 
         [Fact]

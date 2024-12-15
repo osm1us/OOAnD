@@ -1,3 +1,5 @@
+namespace SpaceBattle.Lib;
+
 public class RegisterIoCDependencySendCommand : ICommand
 {
     public void Execute()
