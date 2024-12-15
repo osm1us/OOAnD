@@ -9,7 +9,6 @@ namespace SpaceBattle.Tests
         public CreateMacroCommandStrategyTests()
         {
             new InitScopeBasedIoCImplementationCommand().Execute();
-            IoC.Resolve<ICommand>("Scopes.Current.Set", IoC.Resolve<object>("Scopes.New", null)).Execute();
         }
 
         [Fact]
