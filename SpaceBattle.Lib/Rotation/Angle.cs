@@ -1,16 +1,35 @@
-﻿namespace SpaceBattle.Lib;
 public class Angle
 {
-    private int deg { get; }
-    public Angle(int deg)
+    private int num { get; set; }
+    private int den { get; }
+
+    public Angle(int num, int den)
     {
-        this.deg = deg % 360;
+        this.den = den;
+        this.num = ((num % den) + den) % den;
     }
+
     public static Angle operator +(Angle ang1, Angle ang2)
     {
-        return new Angle(ang1.deg + ang2.deg);
+        return new Angle((ang1.num + ang2.num), ang1.den);
     }
-    public override bool Equals(object? obj) => obj != null && obj is Angle angle && deg == angle.deg;
 
-    public override int GetHashCode() => deg.GetHashCode();
+    public override bool Equals(object? obj) => obj != null && obj is Angle angle && num == angle.num && den == angle.den;
+
+    public override int GetHashCode() => num.GetHashCode();
+
+    public static bool operator ==(Angle ang1, Angle ang2)
+    {
+        return ang1.Equals(ang2);
+    }
+
+    public static bool operator !=(Angle ang1, Angle ang2)
+    {
+        return !(ang1 == ang2);
+    }
+
+    public double Sin()
+    {
+        return 2*Math.PI*num/den;
+    }
 }

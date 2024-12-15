@@ -5,6 +5,6 @@ public class RegisterIoCDependencySendCommand : ICommand
         IoC.Resolve<ICommand>(
                 "IoC.Register", 
                 "Commands.Send",
-                (object[] args) => (ICommand)new SendCommand((ICommand)x)).Execute();
+                (object[] args) => (ICommand)new SendCommand((ICommand)args[0], (ICommandReceiver)args[1])).Execute();
     }
 }

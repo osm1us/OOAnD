@@ -1,4 +1,4 @@
-﻿using SpaceBattle.Lib;
+using SpaceBattle.Lib;
 
 namespace SpaceBattle.Tests;
 
@@ -9,8 +9,8 @@ public class StartRotateTest
     {
         var gameObject = new Dictionary<string, object>
         {
-            ["AnglePos"] = new Angle(45),
-            ["RotateVelocity"] = new Angle(90)
+            ["AnglePos"] = new Angle(45, 8),
+            ["RotateVelocity"] = new Angle(90, 8)
         };
         var startRotate = new StartRotateCommand(gameObject);
         startRotate.Execute();
@@ -22,8 +22,8 @@ public class StartRotateTest
     {
         var gameObject = new Dictionary<string, object>
         {
-            ["AnglePos"] = new Angle(0),
-            ["RotateVelocity"] = new Angle(10)
+            ["AnglePos"] = new Angle(0, 8),
+            ["RotateVelocity"] = new Angle(10, 8)
         };
         var startRotate = new StartRotateCommand(gameObject);
 
@@ -31,6 +31,6 @@ public class StartRotateTest
         var cmd = (ICommand)gameObject["repeatableRotate"];
 
         cmd.Execute();
-        Assert.Equal(gameObject["AnglePos"], new Angle(10));
+        Assert.Equal(gameObject["AnglePos"], new Angle(10, 8));
     }
 }

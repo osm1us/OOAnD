@@ -18,8 +18,8 @@ namespace SpaceBattle.Tests
         {        
            var gameObject = new Dictionary<string, object>
             {
-                { "AnglePos", new Angle(90) },
-                { "RotateVelocity", new Angle(45) }
+                { "AnglePos", new Angle(90, 8) },
+                { "RotateVelocity", new Angle(45, 8) }
             };
 
             var command = new RegisterIoCDependencyRotateCommand();
@@ -28,7 +28,7 @@ namespace SpaceBattle.Tests
             var rotateCommand = IoC.Resolve<ICommand>("Commands.Rotate", gameObject);
             rotateCommand.Execute();
 
-            Assert.Equal(new Angle(135), (Angle)gameObject["AnglePos"]);
+            Assert.Equal(new Angle(135, 8), (Angle)gameObject["AnglePos"]);
         }
     }
 }
