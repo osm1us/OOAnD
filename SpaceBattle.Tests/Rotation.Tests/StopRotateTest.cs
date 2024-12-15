@@ -9,7 +9,7 @@ public class StopRotateTest
     public void StopRotateSuccessTest()
     {
         var gameObject = new Dictionary<string, object>();
-        var injectable = new Mock<Injectable>();
+        var injectable = new Mock<ICommandInjectable>();
         gameObject["repeatableRotate"] = injectable.Object;
         var stopRotate = new StopRotateCommand(gameObject);
 

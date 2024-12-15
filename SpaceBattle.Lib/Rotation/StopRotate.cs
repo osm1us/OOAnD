@@ -16,7 +16,7 @@ public class StopRotateCommand : ICommand
             throw new InvalidOperationException("Поворот не был запущен");
         }
 
-        var injectable = (Injectable)_gameObject["repeatableRotate"];
+        var injectable = (ICommandInjectable)_gameObject["repeatableRotate"];
         injectable.Inject(new EmptyCommand());
     }
 }

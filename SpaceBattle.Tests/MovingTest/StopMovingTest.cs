@@ -3,13 +3,13 @@ using SpaceBattle.Lib;
 
 namespace SpaceBattle.Tests;
 
-public class StopMvoingTest
+public class StopMovingTest
 {
     [Fact]
     public void StopMovingSuccessTest()
     {
         var gameObject = new Dictionary<string, object>();
-        var injectable = new Mock<Injectable>();
+        var injectable = new Mock<ICommandInjectable>();
         gameObject["repeatableMove"] = injectable.Object;
         var stopMoving = new StopMoveCommand(gameObject);
 

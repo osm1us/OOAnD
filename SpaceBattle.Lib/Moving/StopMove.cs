@@ -16,7 +16,7 @@ public class StopMoveCommand : ICommand
             throw new InvalidOperationException("Движение не был запущено");
         }
 
-        var injectable = (Injectable)_gameObject["repeatableMove"];
+        var injectable = (ICommandInjectable)_gameObject["repeatableMove"];
         injectable.Inject(new EmptyCommand());
     }
 }
