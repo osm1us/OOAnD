@@ -1,4 +1,4 @@
-public class Angle
+﻿public class Angle
 {
     private int num { get; set; }
     private int den { get; }
@@ -11,7 +11,7 @@ public class Angle
 
     public static Angle operator +(Angle ang1, Angle ang2)
     {
-        return new Angle((ang1.num + ang2.num), ang1.den);
+        return new Angle(ang1.num + ang2.num, ang1.den);
     }
 
     public override bool Equals(object? obj) => obj != null && obj is Angle angle && num == angle.num && den == angle.den;
@@ -30,6 +30,10 @@ public class Angle
 
     public double Sin()
     {
-        return 2*Math.PI*num/den;
+        return Math.Sin(2 * Math.PI * num / den);
+    }
+    public double Cos()
+    {
+        return Math.Cos(2 * Math.PI * num / den);
     }
 }

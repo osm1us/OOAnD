@@ -1,7 +1,4 @@
-using Hwdtech;
-using Hwdtech.Ioc;
-
-namespace SpaceBattle.Lib;
+﻿namespace SpaceBattle.Lib;
 
 public class RegisterIoCDependencyMoveCommand : ICommand
 {

@@ -1,15 +1,11 @@
-using Hwdtech;
-using Hwdtech.Ioc;
-using System.Linq;
-
-namespace SpaceBattle.Lib
+﻿namespace SpaceBattle.Lib
 {
     public class RegisterIoCDependencyMacroCommand : ICommand
     {
         public void Execute()
         {
             IoC.Resolve<ICommand>(
-                "IoC.Register", 
+                "IoC.Register",
                 "Commands.Macro",
                 (object[] args) => (ICommand)new SimpleMacroCommand(args.Select(x => (ICommand)x).ToArray())).Execute();
         }

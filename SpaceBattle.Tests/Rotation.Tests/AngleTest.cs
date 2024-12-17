@@ -1,5 +1,4 @@
-using SpaceBattle.Lib;
-namespace Spacebattle.Tests;
+﻿namespace Spacebattle.Tests;
 
 public class AngleTests
 {
@@ -75,8 +74,15 @@ public class AngleTests
     [Fact]
     public void Sin_ShouldReturnCorrectValue()
     {
-        var angle = new Angle(1, 8);
-        Assert.Equal(2 * Math.PI * 1 / 8, angle.Sin());
+        var angle = new Angle(2, 8);
+        Assert.Equal(1.0, angle.Sin(), precision: 6);
+    }
+
+    [Fact]
+    public void Cos_ShouldReturnCorrectValue()
+    {
+        var angle = new Angle(2, 8);
+        Assert.Equal(0.0, angle.Cos(), precision: 6);
     }
 
     [Fact]

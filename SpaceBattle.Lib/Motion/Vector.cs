@@ -23,6 +23,7 @@
         resultCoordinates.coordinates = vector1.coordinates.Select((с, index) => с + vector2.coordinates[index]).ToArray();
         return resultCoordinates;
     }
+
     public override bool Equals(object? obj)
     {
         return obj != null && obj is Vector otherVector && coordinates.SequenceEqual(otherVector.coordinates);
@@ -32,6 +33,16 @@
     {
         return coordinates.GetHashCode();
     }
-    public int Dimension => coordinates.Length;
 
+    public static bool operator ==(Vector? vector1, Vector? vector2)
+    {
+        return !(vector1 is null || vector2 is null) && vector1.Equals(vector2);
+    }
+
+    public static bool operator !=(Vector? vector1, Vector? vector2)
+    {
+        return !(vector1 == vector2);
+    }
+
+    public int Dimension => coordinates.Length;
 }

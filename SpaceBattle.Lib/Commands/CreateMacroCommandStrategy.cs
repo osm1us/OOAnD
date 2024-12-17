@@ -1,22 +1,19 @@
-using Hwdtech;
-using System.Linq;
-
-namespace SpaceBattle.Lib
+﻿namespace SpaceBattle.Lib
 {
     public class CreateMacroCommandStrategy
     {
-        private readonly string commandSpec;
+        private readonly string cmdSpec;
 
-        public CreateMacroCommandStrategy(string commandSpec)
+        public CreateMacroCommandStrategy(string cmdSpec)
         {
-            this.commandSpec = commandSpec;
+            this.cmdSpec = cmdSpec;
         }
 
         public ICommand Resolve(object[] args)
         {
-            var commandNames = IoC.Resolve<string[]>($"Specs.{commandSpec}");
-            var commands = commandNames.Select(name => IoC.Resolve<ICommand>(name, args)).ToArray();
-            return IoC.Resolve<ICommand>("Commands.Macro", commands.Cast<object>().ToArray());
+            var cmdsNames = IoC.Resolve<string[]>($"Specs.{cmdSpec}");
+            var cmds = cmdsNames.Select(name => IoC.Resolve<ICommand>(name, args)).ToArray();
+            return IoC.Resolve<ICommand>("Commands.Macro", cmds.Cast<object>().ToArray());
         }
     }
 }

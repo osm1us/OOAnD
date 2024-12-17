@@ -1,4 +1,4 @@
-using Moq;
+﻿using Moq;
 using SpaceBattle.Lib;
 
 namespace SpaceBattle.Tests;
@@ -15,5 +15,16 @@ public class SendCommandTests
         sendCommand.Execute();
 
         receiver.Verify(x => x.Receive(cmd.Object));
+    }
+    [Fact]
+    public void SendCommand_Should_Throw_When_Receiver_Fails()
+    {
+        var cmd = new Mock<ICommand>();
+        var receiver = new Mock<ICommandReceiver>();
+        receiver.Setup(r => r.Receive(cmd.Object)).Throws<Exception>();
+
+        var sendCommand = new SendCommand(cmd.Object, receiver.Object);
+
+        Assert.Throws<Exception>(() => sendCommand.Execute());
     }
 }

@@ -1,8 +1,5 @@
-using Hwdtech;
-using Hwdtech.Ioc;
-using Moq;
+﻿using Hwdtech.Ioc;
 using SpaceBattle.Lib;
-using Xunit;
 
 namespace SpaceBattle.Tests
 {
@@ -11,19 +8,21 @@ namespace SpaceBattle.Tests
         public RegisterIoCDependencyRotateCommandTests()
         {
             new InitScopeBasedIoCImplementationCommand().Execute();
+            IoC.Resolve<ICommand>("Scopes.Current.Set",
+            IoC.Resolve<object>("Scopes.New", IoC.Resolve<object>("Scopes.Root"))).Execute();
         }
 
         [Fact]
         public void Execute_Should_Register_Rotate_Command_Dependency()
-        {        
-           var gameObject = new Dictionary<string, object>
+        {
+            var gameObject = new Dictionary<string, object>
             {
                 { "AnglePos", new Angle(90, 8) },
                 { "RotateVelocity", new Angle(45, 8) }
             };
 
-            var command = new RegisterIoCDependencyRotateCommand();
-            command.Execute();
+            var cmd = new RegisterIoCDependencyRotateCommand();
+            cmd.Execute();
 
             var rotateCommand = IoC.Resolve<ICommand>("Commands.Rotate", gameObject);
             rotateCommand.Execute();
