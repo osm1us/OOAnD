@@ -115,8 +115,8 @@ public class VectorTest
     [Fact]
     public void Vector_Has_HashCode_Test()
     {
-        var vector = new Vector(1, 2, 3);
-        var hashCode = vector.GetHashCode();
-        Assert.Equal(hashCode, vector.GetHashCode());
+        var vector1 = new Vector(1, 2, 3);
+        var vector2 = new Vector(1, 2, 3);
+        Assert.Equal(vector1.GetHashCode(), vector2.GetHashCode());
     }
 }
