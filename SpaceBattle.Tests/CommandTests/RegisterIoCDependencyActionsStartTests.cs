@@ -3,6 +3,7 @@
 using Hwdtech;
 using Hwdtech.Ioc;
 using SpaceBattle.Lib;
+
 public class RegisterIoCDependencyActionsStartTests
 {
     public RegisterIoCDependencyActionsStartTests()
@@ -17,7 +18,7 @@ public class RegisterIoCDependencyActionsStartTests
     {
         var gameObject = new Dictionary<string, object>();
         new RegisterIoCDependencyActionsStart().Execute();
-        var command = IoC.Resolve<ICommand>("Actions.Start", gameObject, "Move");
-        Assert.IsType<StartCommand>(command);
+        var cmd = IoC.Resolve<ICommand>("Actions.Start", gameObject, "Move");
+        Assert.IsType<StartCommand>(cmd);
     }
 }

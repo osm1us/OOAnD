@@ -1,10 +1,18 @@
 ﻿namespace SpaceBattle.Lib;
 
-public class SendCommand(ICommand cmd) : ICommand
+public class SendCommand : ICommand
 {
+    private readonly ICommand _cmd;
+    private readonly ICommandReceiver _receiver;
+
+    public SendCommand(ICommand cmd, ICommandReceiver receiver)
+    {
+        _cmd = cmd;
+        _receiver = receiver;
+    }
+
     public void Execute()
     {
-        var receiver = IoC.Resolve<ICommandReceiver>("Game.CommandsReceiver");
-        receiver.Receive(cmd);
+        _receiver.Receive(_cmd);
     }
 }

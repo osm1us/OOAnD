@@ -26,11 +26,11 @@ public class StartCommandTests
         IoC.Resolve<ICommand>("IoC.Register", "Macro.Move",
             (object[] args) => cmd.Object).Execute();
 
-        var q = new Mock<Queue<ICommand>>();
-        IoC.Resolve<ICommand>("IoC.Register", "Game.Queue",
-            (object[] args) => q.Object).Execute();
+        var receiver = new Mock<ICommandReceiver>();
+        IoC.Resolve<ICommand>("IoC.Register", "Game.CommandsReceiver",
+            (object[] args) => receiver.Object).Execute();
 
-        new RegisterIoCDependencyGameCommandReceiver().Execute();
+        new RegisterIoCDependencySendCommand().Execute();
     }
 
     [Fact]
@@ -39,9 +39,9 @@ public class StartCommandTests
         var gameObject = new Dictionary<string, object>();
         var startCommand = new StartCommand(gameObject, "Move");
         startCommand.Execute();
-        var q = IoC.Resolve<Queue<ICommand>>("Game.Queue");
 
         Assert.True(gameObject.ContainsKey("repeatableMove"));
-        Assert.Single(q);
+        var receiver = IoC.Resolve<ICommandReceiver>("Game.CommandsReceiver");
+        Mock.Get(receiver).Verify(r => r.Receive(It.IsAny<ICommand>()), Times.Once());
     }
 }

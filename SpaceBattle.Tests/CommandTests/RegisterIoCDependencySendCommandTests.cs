@@ -19,12 +19,9 @@ namespace SpaceBattle.Tests
             var receiver = new Mock<ICommandReceiver>();
             var cmd = new Mock<ICommand>();
 
-            IoC.Resolve<ICommand>("IoC.Register", "Game.CommandsReceiver",
-                (object[] args) => receiver.Object).Execute();
-
             new RegisterIoCDependencySendCommand().Execute();
 
-            var sendCommand = new SendCommand(cmd.Object);
+            var sendCommand = IoC.Resolve<ICommand>("Commands.Send", cmd.Object, receiver.Object);
             sendCommand.Execute();
 
             receiver.Verify(r => r.Receive(cmd.Object), Times.Once());

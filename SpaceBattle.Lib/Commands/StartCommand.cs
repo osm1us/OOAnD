@@ -14,14 +14,13 @@ public class StartCommand : ICommand
     public void Execute()
     {
         var cmd = IoC.Resolve<ICommand>($"Commands.{_cmdType}", _gameObject);
-        var q = IoC.Resolve<Queue<ICommand>>("Game.Queue");
         var injectable = (ICommand)IoC.Resolve<ICommandInjectable>("Commands.CommandInjectable");
-        var repeat = new RepeatCommand(injectable, q);
-        var repeatable = IoC.Resolve<ICommand>($"Macro.{_cmdType}", cmd, repeat);
+        var receiver = IoC.Resolve<ICommandReceiver>("Game.CommandsReceiver");
+        var send = new SendCommand(injectable, receiver);
+        var repeatable = IoC.Resolve<ICommand>($"Macro.{_cmdType}", cmd, send);
         ((ICommandInjectable)injectable).Inject(repeatable);
         _gameObject[$"repeatable{_cmdType}"] = injectable;
-
-        var sendCommand = new SendCommand(repeatable);
+        var sendCommand = new SendCommand(repeatable, receiver);
         sendCommand.Execute();
     }
 }

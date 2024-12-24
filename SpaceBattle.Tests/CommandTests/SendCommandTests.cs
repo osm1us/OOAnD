@@ -1,45 +1,29 @@
-﻿using Hwdtech.Ioc;
-using Moq;
+﻿using Moq;
 using SpaceBattle.Lib;
 
 namespace SpaceBattle.Tests;
 
 public class SendCommandTests
 {
-    private readonly Mock<ICommandReceiver> receiver;
-
-    public SendCommandTests()
-    {
-        new InitScopeBasedIoCImplementationCommand().Execute();
-        IoC.Resolve<ICommand>("Scopes.Current.Set",
-            IoC.Resolve<object>("Scopes.New", IoC.Resolve<object>("Scopes.Root"))
-        ).Execute();
-
-        var q = new Mock<Queue<ICommand>>();
-        IoC.Resolve<ICommand>("IoC.Register", "Game.Queue",
-            (object[] args) => q.Object).Execute();
-
-        receiver = new Mock<ICommandReceiver>();
-        IoC.Resolve<ICommand>("IoC.Register", "Game.CommandsReceiver",
-            (object[] args) => receiver.Object).Execute();
-    }
     [Fact]
-    public void SendCommand_Should_Send_A_Command_To_The_Command_Receiver()
+    public void SendCommand_Should_Send_Command_To_Receiver()
     {
         var cmd = new Mock<ICommand>();
-        var sendCommand = new SendCommand(cmd.Object);
+        var receiver = new Mock<ICommandReceiver>();
+        var sendCommand = new SendCommand(cmd.Object, receiver.Object);
 
         sendCommand.Execute();
 
-        receiver.Verify(x => x.Receive(cmd.Object));
+        receiver.Verify(r => r.Receive(cmd.Object), Times.Once());
     }
+
     [Fact]
     public void SendCommand_Should_Throw_When_Receiver_Fails()
     {
         var cmd = new Mock<ICommand>();
+        var receiver = new Mock<ICommandReceiver>();
         receiver.Setup(r => r.Receive(cmd.Object)).Throws<Exception>();
-
-        var sendCommand = new SendCommand(cmd.Object);
+        var sendCommand = new SendCommand(cmd.Object, receiver.Object);
 
         Assert.Throws<Exception>(() => sendCommand.Execute());
     }

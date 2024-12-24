@@ -11,6 +11,7 @@ public class RegisterIoCDependencyActionsStart : ICommand
             {
                 var gameObject = (IDictionary<string, object>)args[0];
                 var cmdType = (string)args[1];
+
                 return new StartCommand(gameObject, cmdType);
             }
         ).Execute();
