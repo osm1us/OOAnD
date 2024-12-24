@@ -14,7 +14,8 @@ namespace SpaceBattle.Tests
 
             cmd2.Setup(m => m.Execute()).Throws<Exception>();
 
-            var macroCommand = new SimpleMacroCommand(cmd1.Object, cmd2.Object, cmd3.Object);
+            IEnumerable<ICommand> commands = new[] { cmd1.Object, cmd2.Object, cmd3.Object };
+            var macroCommand = new SimpleMacroCommand(commands);
 
             Assert.Throws<Exception>(() => macroCommand.Execute());
             cmd1.Verify(m => m.Execute(), Times.Once());

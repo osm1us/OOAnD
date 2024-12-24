@@ -1,17 +1,13 @@
 ﻿namespace SpaceBattle.Lib;
 public class SimpleMacroCommand : ICommand
 {
-    public ICommand[] cmds;
-    public SimpleMacroCommand(params ICommand[] cmds)
+    private readonly IEnumerable<ICommand> cmds;
+    public SimpleMacroCommand(IEnumerable<ICommand> cmds)
     {
         this.cmds = cmds;
     }
     public void Execute()
     {
-        cmds.All(c =>
-        {
-            c.Execute();
-            return true;
-        });
+        cmds.ToList().ForEach(c => c.Execute());
     }
 }
