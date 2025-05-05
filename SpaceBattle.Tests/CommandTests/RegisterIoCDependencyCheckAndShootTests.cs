@@ -14,6 +14,19 @@ public class RegisterIoCDependencyCheckAndShootTests
     }
 
     [Fact]
+    public void Execute_Should_Add_Ammo()
+    {
+        var mockAmmo = new Mock<IAddAmmo>();
+
+        var amount = 5;
+        var cmd = new AddAmmoCommand(mockAmmo.Object, amount);
+
+        cmd.Execute();
+
+        mockAmmo.Verify(m => m.Add(amount), Times.Once());
+    }
+
+    [Fact]
     public void RegisterIoCDependencyCheckAndShoot_Should_Register_All_Commands()
     {
         var addAmmo = new Mock<IAddAmmo>().Object;
