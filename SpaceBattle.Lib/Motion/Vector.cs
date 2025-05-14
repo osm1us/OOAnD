@@ -1,7 +1,7 @@
 ﻿public class Vector
 {
     private int[] coordinates;
-
+    public int[] Coordinates => coordinates.ToArray();
     public Vector(params int[]? coordinates)
     {
         if (coordinates == null || coordinates.Length == 0)
