@@ -15,6 +15,24 @@ public class VectorTest
     }
 
     [Fact]
+    public void Vector_Creation_Valid_Coordinates_Test()
+    {
+        var coords = new int[] { 1, 2, 3 };
+        var vector = new Vector(coords);
+        Assert.Equal(coords, vector.Coordinates);
+    }
+
+    [Fact]
+    public void Vector_Coordinates_Immutability_Test()
+    {
+        var vector = new Vector(4, 5, 6);
+        var coords = vector.Coordinates;
+        coords[0] = 999;
+        // Оригинальный вектор не должен поменяться
+        Assert.Equal(new int[] { 4, 5, 6 }, vector.Coordinates);
+    }
+
+    [Fact]
     public void Vector_Equality_First_Null_Test()
     {
         Vector? vector1 = null;
