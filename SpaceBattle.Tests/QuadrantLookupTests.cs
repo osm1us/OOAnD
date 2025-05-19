@@ -8,6 +8,7 @@ public class QuadrantLookupTests
     {
         public Vector Position { get; set; }
         public Vector Velocity { get; } = new Vector(0, 0);
+        private readonly Guid _id = Guid.NewGuid();
 
         public TestMoving(params int[] coords)
         {
@@ -16,12 +17,12 @@ public class QuadrantLookupTests
 
         public override bool Equals(object? obj)
         {
-            return obj is TestMoving other && Position.Equals(other.Position);
+            return obj is TestMoving other && _id.Equals(other._id);
         }
 
         public override int GetHashCode()
         {
-            return Position.GetHashCode();
+            return _id.GetHashCode();
         }
     }
 

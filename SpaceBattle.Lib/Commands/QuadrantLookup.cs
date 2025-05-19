@@ -45,13 +45,24 @@ public class QuadrantLookup
 
     public void Move(IMoving obj, Vector newPos)
     {
-        var oldQuadrant = GetCellCoords(obj.Position)
-        var newQuadrant = GetCellCoords(newpos)
-        if (oldQuadrant == newQuadrant){
+        var oldCoords = GetCellCoords(obj.Position);
+        var newCoords = GetCellCoords(newPos);
+
+        if (oldCoords == newCoords)
+        {
             obj.Position = newPos;
             return;
         }
-        Remove(obj);
+
+        if (_grid.TryGetValue(oldCoords, out var set))
+        {
+            set.Remove(obj);
+            if (!set.Any())
+            {
+                _grid.Remove(oldCoords);
+            }
+        }
+
         obj.Position = newPos;
         Insert(obj);
     }
