@@ -1,6 +1,6 @@
 ﻿namespace SpaceBattle.Lib;
 
-public class QuadrantLookup : ISpatialMap
+public class QuadrantLookup
 {
     private readonly int _cellSize;
     private readonly Dictionary<(int, int), HashSet<IMoving>> _grid = new();
@@ -45,6 +45,12 @@ public class QuadrantLookup : ISpatialMap
 
     public void Move(IMoving obj, Vector newPos)
     {
+        var oldQuadrant = GetCellCoords(obj.Position)
+        var newQuadrant = GetCellCoords(newpos)
+        if (oldQuadrant == newQuadrant){
+            obj.Position = newPos;
+            return;
+        }
         Remove(obj);
         obj.Position = newPos;
         Insert(obj);
